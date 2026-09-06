@@ -1,18 +1,46 @@
+<!-- Contêiner principal que organiza toda a calculadora. -->
 <div class="conteiner">
+    <!-- Área visual que envolve o formulário e as mensagens de resultado. -->
     <div class="form-box">
-        <form>
+        <!-- #frm cria uma referência ao formulário e ngSubmit chama o método ao enviá-lo. -->
+        <form #frm="ngForm" (ngSubmit)="calcularResultado()">
+            <!-- Título apresentado no topo da calculadora. -->
             <h2>Calculadora</h2>
+
+            <!-- Label identifica o primeiro campo e for o conecta ao input pelo id. -->
             <label for="numero1">Número 1</label>
-            <input type="number" name="numero1" id="numero1">
+            <!-- type number aceita números; [(ngModel)] mantém o campo ligado a numero1 no componente. -->
+            <input type="number" name="numero1" id="numero1" [(ngModel)]="numero1">
 
+            <!-- Label identifica o segundo campo e for o conecta ao input pelo id. -->
             <label for="numero2">Número 2</label>
-            <input type="number" name="numero2" id="numero2">
+            <!-- Este campo mantém seu valor sincronizado com a propriedade numero2. -->
+            <input type="number" name="numero2" id="numero2" [(ngModel)]="numero2">
 
+            <!-- type submit envia o formulário e dispara calcularResultado(). -->
             <button type="submit"> Somar </button>
+            <!-- Alternativa: um botão comum poderia chamar o método diretamente pelo evento click. -->
+            <!-- <button type="button" (click)="calcularResultado()"> Somar </button> -->
         </form>
 
-        <div class="result-display">
-            <p>Resultado <span id="result">Valor</span></p>
+        <!-- *ngIf exibe o bloco somente quando resultado tiver um valor verdadeiro; @if é a sintaxe atual recomendada. -->
+        <div class="result-display" *ngIf="resultado">
+            <!-- Mensagem exibida quando existe um resultado calculado. -->
+            <p>Seu Resultado está abaixo: </p>
         </div>
+
+        <!-- @if renderiza este conteúdo somente quando resultado tiver um valor verdadeiro. -->
+        @if(resultado){
+            <div class="result-display">
+                <!-- Interpolação {{resultado}} apresenta na tela o valor do componente. -->
+                <p>Resultado: <span id="result">{{resultado}}</span></p>
+            </div>
+        } @else {
+            <!-- @else aparece quando ainda não existe um resultado para exibir. -->
+            <div class="result-display">
+                <!-- Mensagem inicial mostrada antes da primeira soma. -->
+                <p>seu resultado aparecerá aqui</p>
+            </div>
+        }
     </div>
 </div>
